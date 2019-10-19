@@ -1,5 +1,8 @@
 /* Component for a Login form */
+import { Redirect } from 'react-router-dom';
 import React, { Component } from 'react';
+
+/* Configuration */
 import config from '../config/app.config';
 
 /* Bootstrap Components */
@@ -10,8 +13,8 @@ export default class RegistrationForm extends Component {
     constructor(props){
         super(props);
         this.state = {
-            user: null,
-            formData: {}
+            user: {},
+            toDashboard: false
         }
         
         // Handle form submission
@@ -19,28 +22,6 @@ export default class RegistrationForm extends Component {
     }
 
     componentDidMount(){
-
-        const post =    {
-            userId: 1,
-            id: 100001,
-            title: "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-            body: "quia et suscipitnostrum rerum est autem sunt rem eveniet architecto"
-        };
-
-
-        // Attempt to create a post
-        fetch('https://jsonplaceholder.typicode.com/posts',{
-            method: 'POST',
-            body: JSON.stringify(post),
-            headers: {"Content-Type": "application/json"}
-        })
-        .then(function(response){
-            return response.json();
-        })
-        .then(function(ddd){
-            console.log(ddd);
-        });
-
 
     }
 
@@ -63,10 +44,7 @@ export default class RegistrationForm extends Component {
         };
 
         const userInfoStr = JSON.stringify(userInfo);
-        console.log(userInfoStr);
-
-
-
+        
         // Attempt to create a user 
         fetch('https://dev-956010.okta.com/api/v1/users?activate=true',{
             method: 'POST',
@@ -78,8 +56,18 @@ export default class RegistrationForm extends Component {
                 "Authorization": "SSWS " + config.apiToken 
             }
         })
-        .then(function(response){
-            return response.json();
+
+        .then( response => {
+            // If form sucessfully submitted
+            if(response.ok){
+                console.log('Successfully created.');
+                this.setState({
+                    toDashboard: true,
+                    user: userInfo.profile
+                })
+            }
+
+            // On bad submission
         })
         .then(function(body){
             console.log(body);
@@ -89,6 +77,14 @@ export default class RegistrationForm extends Component {
 
 
     render(){
+        if(this.state.toDashboard === true){
+            return <Redirect to={{
+                    pathname: "/dashboard",
+                    state: { user: this.state.user }
+                }}    
+            />
+        }
+
         return(
             <div>
                 <Form id="registrationForm" onSubmit={ this.handleSubmit } >

@@ -3,6 +3,7 @@ import { Route} from 'react-router-dom';
 import './styles/App.css';
 
 import LandingPage from './components/LandingPage';
+import Dashboard from './components/Dashboard';
 
 import config from './config/app.config';
 /*
@@ -25,6 +26,7 @@ class App extends Component
       return (
           <main>
             <Route path='/' exact={true} component={LandingPage} />
+            <Route path='/dashboard' exact={true} component={Dashboard} />
           </main>
       );
     }
