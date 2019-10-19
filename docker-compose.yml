@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+    nginx: # Handles routing; Routes traffic to the appropriate service
+        restart: 'always' # Critical service, always needs to restart
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./nginx
+        ports:
+            - '8080:80'
+
+    client: # User Interface container
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./client
+        volumes:
+            - /app/node_modules
+            - ./client:/app

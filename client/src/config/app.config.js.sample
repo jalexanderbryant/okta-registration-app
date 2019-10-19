@@ -1,0 +1,7 @@
+export default {
+    url:  'Your Okta Domain',
+    issuer: '<York Okta Domain>/oauth2/default',
+    redirectUri: window.location.origin + '/implicit/callback',
+    clientId: '<Okta client ID>',
+    apiToken: '<Your Api Token>'
+};
