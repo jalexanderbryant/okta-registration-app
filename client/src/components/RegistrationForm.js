@@ -74,8 +74,6 @@ export default class RegistrationForm extends Component {
         });
     }
 
-
-
     render(){
         if(this.state.toDashboard === true){
             return <Redirect to={{
