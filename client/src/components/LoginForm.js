@@ -58,15 +58,10 @@ export default withAuth(class LoginForm extends Component {
 
     render(){
         if(this.state.sessionToken){
-            this.props.auth.redirect({sessionToken: this.state.sessionToken});
+            this.props.auth.redirect({
+                sessionToken: this.state.sessionToken,
+            });
             return null;
-            /*
-            return <Redirect to={{
-                    pathname: "/dashboard",
-                    state: { user: this.state.user }
-                }}    
-            />
-            */
         }
         return(
             <div>

@@ -10,29 +10,38 @@ import Button from 'react-bootstrap/Button';
 import { withAuth } from '@okta/okta-react';
 
 
-export default withAuth(class extends Component {
+export default withAuth(class Dashboard extends Component {
     constructor(props){
         super(props);
-        this.state = { authenticated: null };
+        this.state = { 
+            authenticated: null,
+            userInfo: null
+        };
         
         // Bind auth check
         this.checkAuthentication = this.checkAuthentication.bind(this);
         // Check Authentication 
         this.checkAuthentication();
+
     }
 
     async checkAuthentication(){
         const authenticated = await this.props.auth.isAuthenticated();
         if(authenticated !== this.state.authenticated){
             this.setState({ authenticated });
+            
+            // Get user info
+            const userInfo = await this.props.auth.getUser();
+            this.setState({ userInfo } );
         }
     }
 
-    componentDidUpdate(){
+    async componentDidUpdate(){
         this.checkAuthentication();
     }
 
-    componentDidMount(){
+    async componentDidMount(){
+        this.checkAuthentication();
     }
 
     render(){
@@ -49,14 +58,16 @@ export default withAuth(class extends Component {
                             > Logout
                             </Button>;
         }   
-        if(this.props.location.state){
+        if(this.state.userInfo){
+            let cfn = this.state.userInfo.given_name;
+            cfn = cfn.charAt(0).toUpperCase() + cfn.slice(1); 
             welcomeString += "Welcome, ";
-            welcomeString += this.props.location.state.user.firstName;
+            welcomeString += cfn; 
             welcomeString += "! Thank you for registering.";
         } else {
             welcomeString = "No user created or signed in.";
         } 
-
+        console.log(this.state.userInfo);
         return(
             <div>
                 <Container>
