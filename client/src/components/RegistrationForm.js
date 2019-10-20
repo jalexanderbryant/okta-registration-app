@@ -1,4 +1,4 @@
-/* Component for a Login form */
+/* Component for a Registration form */
 import { Redirect } from 'react-router-dom';
 import React, { Component } from 'react';
 
@@ -24,9 +24,6 @@ export default class RegistrationForm extends Component {
     componentDidMount(){
 
     }
-
-
-
 
     handleSubmit(event){
         event.preventDefault();
@@ -65,6 +62,8 @@ export default class RegistrationForm extends Component {
                     toDashboard: true,
                     user: userInfo.profile
                 })
+                console.log("Attempting to log the user in.");
+
             }
 
             // On bad submission

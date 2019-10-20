@@ -1,20 +1,54 @@
-/* Component for a Login form */
+/* Component for a Dashboard view*/
 import React, { Component } from 'react';
-
+import '../styles/Dashboard.css';
 /* Bootstrap Components */
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
     
-export default class LoginForm extends Component {
+/* Okta */
+import { withAuth } from '@okta/okta-react';
+
+
+export default withAuth(class extends Component {
     constructor(props){
         super(props);
+        this.state = { authenticated: null };
+        
+        // Bind auth check
+        this.checkAuthentication = this.checkAuthentication.bind(this);
+        // Check Authentication 
+        this.checkAuthentication();
+    }
+
+    async checkAuthentication(){
+        const authenticated = await this.props.auth.isAuthenticated();
+        if(authenticated !== this.state.authenticated){
+            this.setState({ authenticated });
+        }
+    }
+
+    componentDidUpdate(){
+        this.checkAuthentication();
     }
 
     componentDidMount(){
     }
 
     render(){
-        let welcomeString = ""
+        let welcomeString = "";
+        let logoutButton;
+
+        if(this.state.authenticated){
+            console.log("user is signed in.");
+            logoutButton = <Button 
+                                variant="warning"
+                                onClick={()=>{this.props.auth.logout()}}
+                                size="lg"
+                                className="logoutButton"
+                            > Logout
+                            </Button>;
+        }   
         if(this.props.location.state){
             welcomeString += "Welcome, ";
             welcomeString += this.props.location.state.user.firstName;
@@ -25,6 +59,10 @@ export default class LoginForm extends Component {
 
         return(
             <div>
+                <Container>
+                    {logoutButton}
+                </Container>
+
                 <Jumbotron>
                     <Container>
                         <h1>Dashboard</h1>
@@ -36,5 +74,4 @@ export default class LoginForm extends Component {
             </div>
         );
     }
-}
-
+})

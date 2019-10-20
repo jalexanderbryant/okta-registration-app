@@ -17,10 +17,10 @@ ReactDOM.render(
     <Router>
         <Security
             issuer={config.issuer}
-            client_id={config.clientId}
-            redirect_uri={config.redirectUri}
+            clientId={config.clientId}
+            redirectUri={config.redirectUri}
             onAuthRequired={onAuthRequired}
-        >
+            >
             <App />
         </Security>
     </Router>, document.getElementById('root'));
