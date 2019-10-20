@@ -1,0 +1,32 @@
+.landingPage {
+      background: url('https://images.pexels.com/photos/373912/pexels-photo-373912.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1920&w=1080') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    display: table;
+}
+
+#verticalCenter{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#verticalCenter button{
+    width: 100%;
+}
+
+.tabContainer{
+    width: 350px;
+    background: #fff;
+    background-color: rgba(255,255,255, 0.95);
+    padding-top: 40px;
+    padding-bottom: 40px;
+    border-radius: 25px;
+}
+.tabContainer form {
+    padding-top: 40px;
+}

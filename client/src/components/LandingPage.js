@@ -2,6 +2,7 @@
  * login and registration form. */ 
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import '../styles/LandingPage.css'; 
 /* App Components */
 import LoginForm from './LoginForm';
 import RegistrationForm from './RegistrationForm';
@@ -13,9 +14,6 @@ import Tab from 'react-bootstrap/Tab';
 
 /* Okta */
 import { withAuth } from '@okta/okta-react';
-
-/* Styles */
-import '../styles/Tabs.css'
 
 export default withAuth(class LandingPage extends Component {
     constructor(props){
@@ -45,22 +43,23 @@ export default withAuth(class LandingPage extends Component {
            return <Redirect to={{ pathname:'/dashboard' }}/>; 
         }
         return(
-            <Container>
-                <h1 className="text-center">Landing Page</h1>
-                <div id="tabContainer"> 
-                    <Tabs defaultActiveKey="login" id="tabContainer">
-                        {/* Login Tab */}
-                        <Tab eventKey="login" title="Login">
-                            <LoginForm />
-                        </Tab> 
-                        
-                        {/* Registration Tab */}
-                        <Tab eventKey="registration" title="Register">
-                            <RegistrationForm />
-                        </Tab> 
-                    </Tabs>
-                </div>
-            </Container>
+            <div className="landingPage">
+                    <div id="verticalCenter">
+                        <Container className="tabContainer">
+                        <Tabs defaultActiveKey="login" id="tabContainer">
+                            {/* Login Tab */}
+                            <Tab eventKey="login" title="Login">
+                                <LoginForm />
+                            </Tab> 
+                            
+                            {/* Registration Tab */}
+                            <Tab eventKey="registration" title="Register">
+                                <RegistrationForm />
+                            </Tab> 
+                        </Tabs>
+                        </Container>
+                    </div>
+            </div>
         );
     }
 })
