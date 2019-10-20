@@ -11,11 +11,11 @@ export default class LoginForm extends Component {
     }
 
     componentDidMount(){
-        console.log(this.props.location.state.user);
-    };
+    }
+
     render(){
         let welcomeString = ""
-        if(this.props.location.state.user){
+        if(this.props.location.state){
             welcomeString += "Welcome, ";
             welcomeString += this.props.location.state.user.firstName;
             welcomeString += "! Thank you for registering.";
